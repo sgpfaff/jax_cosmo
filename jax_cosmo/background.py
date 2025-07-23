@@ -48,9 +48,9 @@ def w(cosmo, a):
 
     .. math::
 
-        w(a) = w_0 + w_a (1 - a)
+        w(a) = w_0 + (w_a  + w_n)*(1 - a)
     """
-    return cosmo.w0 + (1.0 - a) * cosmo.wa  # Equation (6) in Linder (2003)
+    return cosmo.w0 + (1.0 - a) * (cosmo.wa  + cosmo.wn) # Equation (6) in Linder (2003)
 
 
 def f_de(cosmo, a):
@@ -80,14 +80,14 @@ def f_de(cosmo, a):
     (see :cite:`2005:Percival` and note the difference in the exponent base
     in the parametrizations) where :math:`f(a)` is computed as
     :math:`f(a) = -3 \int_0^{\ln(a)} [1 + w(a')] d \ln(a')`.
-    In the case of Linder's parametrisation for the dark energy
+    In the case of Linder's parametrisation (with the degenerate parameter) for the dark energy
     in Eq. :eq:`linderParam` :math:`f(a)` becomes:
 
     .. math::
 
-        f(a) = -3 (1 + w_0 + w_a) \ln(a) + 3 w_a (a - 1)
+        f(a) = -3 (1 + w_0 + w_n + w_a) \ln(a) + 3 (w_a + w_n) (a - 1)
     """
-    return -3.0 * (1.0 + cosmo.w0 + cosmo.wa) * np.log(a) + 3.0 * cosmo.wa * (a - 1.0)
+    return -3.0 * (1.0 + cosmo.w0 + cosmo.wn + cosmo.wa) * np.log(a) + 3.0 * (cosmo.wa + cosmo.wn)* (a - 1.0)
 
 
 def Esqr(cosmo, a):
